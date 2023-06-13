@@ -2,15 +2,12 @@ const Trades = require("../models/trades");
 
 // CRUD Methods
 
-// GET
-
-// GET /
+// GET All (with optional query)
 const getAllTrades = async (req, res, next) => {
   try {
     let type = req.query.type ? req.query.type : false;
     let user_id = req.query.user_id ? req.query.user_id : false;
     let trades = false;
-    console.log(type, user_id);
     if (user_id && type) {
       trades = await Trades.findAll({
         where: {
@@ -35,7 +32,6 @@ const getAllTrades = async (req, res, next) => {
     }
 
     if (trades) {
-      res.body = trades;
       res.send(trades);
     }
   } catch (error) {
@@ -52,7 +48,6 @@ const getTradeById = async (req, res, next) => {
       },
     });
     if (trade) {
-      res.body = trade;
       res.send(trade);
     } else {
       res.status(404).send("ID not found");
